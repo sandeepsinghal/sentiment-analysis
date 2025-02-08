@@ -14,5 +14,8 @@ class StockSentiment:
         result = self.nlp(headline)
         return result[0]['label'], result[0]['score']
     
-    def analyze_sentiments(self):
-        self.dataframe['sentiment'] = self.dataframe[self.headline_column].apply(self.get_sentiment)
+    def get_sentiment_df(self, df: pd.DataFrame, column_name: str) -> pd.DataFrame:
+        sentiments = df[column_name].apply(lambda x: self.get_sentiment(x))
+        df['sentiment'] = sentiments.apply(lambda x: x[0])
+        df['score'] = sentiments.apply(lambda x: x[1])
+        return df

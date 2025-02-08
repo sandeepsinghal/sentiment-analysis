@@ -1,5 +1,8 @@
 from stock_sentiment import StockSentiment
+
+import pandas as pd
 import unittest
+
 class TestStockSentiment(unittest.TestCase):
 
     def setUp(self):
@@ -8,6 +11,16 @@ class TestStockSentiment(unittest.TestCase):
     def test_get_sentiment_positive(self):
         headline = "The company's stock price surged after the positive earnings report."
         result = self.stock_sentiment.get_sentiment(headline)
+        print(result)
+
+    def get_sentiment_dataframe(self):
+        df = pd.DataFrame({
+            'headline': [
+                "The company's stock price surged after the positive earnings report.",
+                "The company's stock price fell after the disappointing earnings report."
+            ]
+        })
+        result = self.stock_sentiment.analyze_dataframe(df, 'headline')
         print(result)
 
     def tests(self):
@@ -47,7 +60,7 @@ class TestStockSentiment(unittest.TestCase):
         # Test the get_sentiment method with the test cases
         for news in test_cases:
             sentiment = self.stock_sentiment.get_sentiment(news)
-            print(f"News: {news}\nSentiment: {sentiment}\n")
+            #print(f"News: {news}\nSentiment: {sentiment}\n")
 
 
 if __name__ == '__main__':
